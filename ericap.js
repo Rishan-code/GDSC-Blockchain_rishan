@@ -12,7 +12,6 @@ describe("ecp contract", function() {
   let tokenBlockReward = 50;
 
   beforeEach(async function () {
-    // Get the ContractFactory and Signers here.
     Token = await ethers.getContractFactory("ecp");
     [owner, addr1, addr2] = await ethers.getSigners();
 
@@ -41,13 +40,10 @@ describe("ecp contract", function() {
   });
   describe("Transactions", function () {
     it("Should transfer tokens between accounts", async function () {
-      // Transfer 50 tokens from owner to addr1
       await ecp.transfer(addr1.address, 50);
       const addr1Balance = await ecp.balanceOf(addr1.address);
       expect(addr1Balance).to.equal(50);
-
-      // Transfer 50 tokens from addr1 to addr2
-      // We use .connect(signer) to send a transaction from another account
+      
       await ecp.connect(addr1).transfer(addr2.address, 50);
       const addr2Balance = await ecp.balanceOf(addr2.address);
       expect(addr2Balance).to.equal(50);
